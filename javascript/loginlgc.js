@@ -75,10 +75,8 @@ function isPswdRqrmntMt(password){
   }
     //checks if all requirements are met
     if(CtnsNumb && CtnsSmLt && CtnsBgLt && CtnsSpChr){
-      console.log(`${CtnsNumb}, ${CtnsSmLt}, ${CtnsBgLt}, ${CtnsSpChr}`);
       return true;
     }else{
-      console.log(`${CtnsNumb}, ${CtnsSmLt}, ${CtnsBgLt}, ${CtnsSpChr}`);
       return false;
     }
 }
@@ -164,3 +162,48 @@ function confirmPasswords(regpassword,confirmpassword){
   }
   return false;
 }
+
+
+// test this methods
+var testPassword,testEmail;
+
+
+// this is a test for the password requirements
+console.log("TEST PASSWORD REQUIRENT")
+
+testPassword = "password";
+console.log(`Password entered: ${testPassword} \nResults: ${isPswdRqrmntMt(testPassword)}\n`);
+
+testPassword = "1234";
+console.log(`Password entered: ${testPassword} \nResults: ${isPswdRqrmntMt(testPassword)}\n`);
+
+testPassword = "ABCD";
+console.log(`Password entered: ${testPassword} \nResults: ${isPswdRqrmntMt(testPassword)}\n`);
+
+testPassword = "@#$";
+console.log(`Password entered: ${testPassword} \nResults: ${isPswdRqrmntMt(testPassword)}\n`);
+
+testPassword = "pasWO12@";
+console.log(`Password entered: ${testPassword} \nResults: ${isPswdRqrmntMt(testPassword)}\n`);
+
+
+
+
+// this is a test for the password length
+console.log("TEST PASSWORD LENGTH");
+
+testPassword = "password";
+console.log(`Password entered: ${testPassword} \nResults: ${isPasswdLong(testPassword, 5)}\n`);
+
+
+testPassword = "password";
+console.log(`Password entered: ${testPassword} \nResults: ${isPasswdLong(testPassword, 12)}\n`);
+
+
+
+// this is a test for the email validity
+testEmail = "email@asdf.com";
+console.log(`Email entered: ${testEmail} \nResults: ${isPasswdLong(testEmail, 5)}\n`);
+
+testEmail = "email@gmail.com";
+console.log(`Email entered: ${testEmail} \nResults: ${isPasswdLong(testEmail, 5)}\n`);
