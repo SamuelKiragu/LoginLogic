@@ -1,8 +1,8 @@
 document.addEventListener('DOMContentLoaded',function(){
   let authForm;
-  if(document.querySelector('#register') != null){
+  if(document.querySelector('#AuthBtn') != null){
     //for register form
-    authForm = document.querySelector('#register');
+    authForm = document.querySelector('#AuthBtn');
     authForm.onclick = function(){
         //validateForm
         validateForm(document.forms["register"]);
@@ -30,7 +30,7 @@ function validateForm(form,errorContainer){
 //displayError function
 function displayError(errorCont,errorMessage){
   // this needs thorough looking into
-  errorCont.innerHTML=`<p id="password-match-error"><img id="error-icon" src="static/icons/erroricon.png">${errorMessage}</p>`;
+  errorCont.innerHTML=`<p id="password-match-error">${errorMessage}</p>`;
   errorCont.style.display = "block";
 }
 
@@ -49,7 +49,7 @@ function dataValidation(xhttpObj){
     case 4:
       if(xhttpObj.status == 200){
         //redirect to home
-        if(xhttpObj.responseText == "success"){
+        if(xhttpObj.responseText == "SUCCESS"){
           window.location.replace("/");
         }
         else{
@@ -107,21 +107,29 @@ function register(userField,passwordField,confirmPasswordField){
     ||
     (userField.value == ""||passwordField.value == ""||confirmPasswordField.value == "")
   ){
-    notificationTimer(errorContainer,"Fill in all input fields");
+    notificationTimer("Fill in all input fields");
   }
   else{
     if(confirmPasswordField.value != null){
       //first validate the authenticity of the email
       if(isEmailValid(userField.value)){
-        if(validatePassword(passwordField.value, confirmPasswordField.value)){
-          // sends the request to the server
-          httpPostRequest("/Register",userField.value,passwordField.value)
-        }
-        else{
-          notificationTimer("passwords do not match");
-          //clear password and confirmpassword
-          passwordField.value = '';
-          confirmPasswordField.value = '';
+        if(isPasswdLong(passwordField.value,8)){
+          if(isPswdRqrmntMt(passwordField.value)){
+            if(confirmPasswords(passwordField.value, confirmPasswordField.value)){
+              // sends the request to the server
+              httpPostRequest("/register",userField.value,passwordField.value)
+            }
+            else{
+              notificationTimer("passwords do not match");
+              //clear password and confirmpassword
+              passwordField.value = '';
+              confirmPasswordField.value = '';
+            }
+          }else{
+            notificationTimer("Enusre password has number,capital and small letter and special character");
+          }
+        }else{
+          notificationTimer("passwords should be 8 characters or longer");
         }
       }
       else{
